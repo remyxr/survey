@@ -1,7 +1,8 @@
-from flask import Flask, redirect, render_template, request
+from flask import Flask, redirect, render_template, request, session
+import pdb
 
 app = Flask(__name__)
-
+app.secret_key="aaaa"
 responses =[]
 
 
@@ -34,12 +35,14 @@ def show_questions():
 def question(qid):
     if request.method == 'POST':
         response = request.form.get('response')
+        responses = session.get('responses', [])
         responses.append(response)
+        session['responses'] = responses
 
     # Check if there is a next question
     next_qid = qid + 1
-    if next_qid in QUESTIONS:
-        question_text = QUESTIONS.get(next_qid)
+    if qid in QUESTIONS:
+        question_text = QUESTIONS.get(qid)
         return render_template("questions.html", qid=next_qid, question_text=question_text)
     else:
         return redirect('/complete')
@@ -47,7 +50,7 @@ def question(qid):
 
 @app.route('/complete')
 def complete():
-    return render_template("complete.html", qid=4)
+    return render_template("complete.html", qid=4, responses=session['responses'])
 
 
 

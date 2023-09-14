@@ -1,9 +1,9 @@
 {% extends 'base.html' %}
 {% block title %} Questions {% endblock %}
 {% block content %}
-<h1>Question {{qid}}</h1>
+<h1>Question {{qid - 1}}</h1>
 <p>{{ question_text }}</p>
-<form method="POST" action="/question/{{ qid + 1 }}">
+<form method="POST" action="/question/{{ qid }}">
     <button name="response" value="yes">Yes</button>
     <button name="response" value="no">No</button>
 </form>
