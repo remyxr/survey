@@ -9,7 +9,7 @@ responses =[]
 QUESTIONS = {
     1: "Have you shopped here before?",
     2: "Did someone else shop with you today?",
-    3: "On average, how much do you spend a month on frisbees?",
+    3: "On average, do you spend more than $10,000 a month on frisbees?",
     4: "Are you likely to shop here again?"
 }
 
@@ -41,35 +41,12 @@ def question(qid):
 
     # Check if there is a next question
     next_qid = qid + 1
-    if qid in QUESTIONS:
-        question_text = QUESTIONS.get(qid)
+    if next_qid in QUESTIONS:
+        question_text = QUESTIONS.get(next_qid)
         return render_template("questions.html", qid=next_qid, question_text=question_text)
     else:
         return redirect('/complete')
-
-
+    
 @app.route('/complete')
 def complete():
-    return render_template("complete.html", qid=4, responses=session['responses'])
-
-
-
-# @app.route('/question_1')
-# def question_1():
-#     return render_template("question_1.html")
-
-# @app.route('/question_2')
-# def question_2():
-#     return render_template("question_2.html")
-
-# @app.route('/question_3')
-# def question_3():
-#     return render_template("question_3.html")
-
-# @app.route('/question_4')
-# def question_4():
-#     return render_template("question_4.html")
-
-# @app.route('/complete')
-# def complete():
-#     return render_template("complete.html")
+    return render_template("complete.html", qid=3, responses=session['responses'])
